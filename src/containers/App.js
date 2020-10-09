@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import './App.css';
-import Person from './Person/Person';
+import classes from './App.css';
+import Person from '../components/Persons/Person/Person';
 
 class App extends Component {
   state = {
@@ -59,21 +59,9 @@ class App extends Component {
     this.setState({ showPersons: !doesShow });
   }
 
-  render() {
-    const style = {
-      backgroundColor: 'green',
-      color: 'white',
-      font: 'inherit',
-      border: '1px solid blue',
-      padding: '8px',
-      cursor: 'pointer',
-      ':hover': {
-        backgroundColor: 'lightgreen',
-        color: 'black'
-      }
-    };
-
+  render() {  
     let persons = null;
+    let btnClass = [classes.Button];
 
     if (this.state.showPersons) {
       persons = (
@@ -88,26 +76,22 @@ class App extends Component {
           })}
         </div>
       );
-      style.backgroundColor = 'red';
-      style[':hover'] = {
-        backgroundColor: 'salmon',
-        color: 'black'
-      }
+      btnClass.push(classes.Red);
     }
 
     // const classes = ['red', 'bold'].join(' ');
-    const classes = [];
+    const assignedClasses = [];
     if (this.state.persons.length <= 2) {
-      classes.push('red');
+      assignedClasses.push(classes.red);
     }
     if (this.state.persons.length <= 1) {
-      classes.push('bold');
+      assignedClasses.push(classes.bold);
     }
 
     return (
-      <div className="App">
+      <div className={classes.App}>
         <h1>Hi, I'm a React App</h1>
-        <p className={classes.join(' ')}>This is really working!</p>
+        <p className={assignedClasses.join(' ')}>This is really working!</p>
         {/* O método abaixo é menos eficiente */}
         {/* <button onClick={() => this.switchNameHandler('Maximilian')}>Switch Name</button> */}
         {/* Focar em utilizar o abaixo, com o bind */}
@@ -115,7 +99,7 @@ class App extends Component {
           style={style} 
           onClick={this.switchNameHandler.bind(this, 'Maximilian')}>Switch Name</button> */}
         <button
-          style={style}
+          className={btnClass.join(' ')}
           onClick={this.togglePersonsHandler}>Toggle Persons</button>
         {persons}
         {/* Um if com expressão ternária */}
